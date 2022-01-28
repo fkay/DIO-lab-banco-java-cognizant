@@ -37,11 +37,25 @@ public abstract class Conta implements IConta {
 		transacoes.add(new Transacao(null, this, TipoTransacao.DEPOSITAR, valor));
 	}
 
+	private void sacarTransf(double valor) {
+		saldo -= valor;
+	}
+
+	private void depositarTransf(double valor, IConta contaOrigem) {
+		saldo += valor;
+		transacoes.add(new Transacao(contaOrigem, this, TipoTransacao.TRANSFERIR, valor));
+	}
+
 	@Override
 	public void transferir(double valor, IConta contaDestino) {
-		this.sacar(valor);
-		contaDestino.depositar(valor);
+		this.sacarTransf(valor);
+		((Conta)contaDestino).depositarTransf(valor, this);
 		transacoes.add(new Transacao(this, contaDestino, TipoTransacao.TRANSFERIR, valor));
+	}
+
+	@Override
+	public void imprimirDadosResumido() {
+		System.out.println(String.format("Ag: %d conta: %d", this.agencia, this.numero, this.cliente.getNome()));
 	}
 
 	protected void imprimirInfosComuns() {
@@ -49,5 +63,12 @@ public abstract class Conta implements IConta {
 		System.out.println(String.format("Agencia: %d", this.agencia));
 		System.out.println(String.format("Numero: %d", this.numero));
 		System.out.println(String.format("Saldo: %.2f", this.saldo));
+	}
+
+	protected void imprimirTransacoes() {
+		System.out.println("**** Transações ****");
+		for(Transacao trans : transacoes) {
+			trans.imprimirTransacao();
+		}
 	}
 }

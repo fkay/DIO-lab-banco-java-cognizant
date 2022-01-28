@@ -13,4 +13,17 @@ public class Transacao {
         this.tipo = tipoTransacao;
         this.valor = valor;
     }
+
+    public void imprimirTransacao() {
+        System.out.println(String.format("Tipo operação: %s", tipo.toString()));
+        if(contaDe != null) {
+            System.out.print("Origem: ");
+            contaDe.imprimirDadosResumido();
+        }
+        if(contaPara !=null) {
+            System.out.print("Destino: ");
+            contaPara.imprimirDadosResumido();
+        }
+        System.out.println(String.format("valor: %.2f", valor));
+    }
 }

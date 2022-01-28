@@ -27,7 +27,15 @@ public class Main {
 		banco.getContas().add(cc1);
 		banco.getContas().add(cc2);
 		banco.getContas().add(poupanca1);
+		System.out.println("Lista de bancos");
 		banco.imprimirContas();
+
+
+		System.out.println("Extrato de transações da cc1");
+		cc1.imprimirTransacoes();
+
+		System.out.println("Extrato de transações da poupanca1");
+		poupanca1.imprimirTransacoes();
 	}
 
 }
